@@ -1,0 +1,276 @@
+import { Course } from '../types';
+
+export const courseData: Course[] = [
+  // IIT-JEE Batches
+  {
+    id: 'IIT-001',
+    title: 'Comprehensive Course (Offline)',
+    description: 'Full syllabus coverage for IIT-JEE with classroom teaching, doubt sessions, and test series.',
+    duration: '1 Year',
+    level: 'IIT-JEE',
+    category: 'IIT-JEE',
+    image: 'https://images.pexels.com/photos/256401/pexels-photo-256401.jpeg?auto=compress&w=800&q=80',
+    features: ['Offline classroom program', 'Comprehensive study material', 'Regular mock tests', 'Doubt Classes', 'DPP', 'Assignments', 'Parent Teacher Meeting', 'Mock Test', 'Mentorship'],
+    examTarget: 'IIT-JEE',
+    fee: '₹1,10,000/- + 18% GST'
+  },
+  {
+    id: 'IIT-002',
+    title: 'Comprehensive Course (Online)',
+    description: 'Live online classes for IIT-JEE preparation with digital resources and assessments.',
+    duration: '1 Year',
+    level: 'IIT-JEE',
+    category: 'IIT-JEE',
+    image: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&w=800&q=80',
+    features: ['Live online classes', 'Digital study material', 'Online test series', 'Doubt Classes', 'DPP', 'Assignments', 'Parent Teacher Meeting', 'Mock Test', 'Mentorship'],
+    examTarget: 'IIT-JEE',
+    fee: '₹45,000/- + 18% GST'
+  },
+  {
+    id: 'IIT-008',
+    title: 'Integrated Program (Class 11th and 12th Combined)',
+    description: 'Comprehensive 2-year integrated program covering complete IIT-JEE syllabus for Class 11th and 12th.',
+    duration: '2 Years',
+    level: 'IIT-JEE',
+    category: 'IIT-JEE',
+    image: 'https://images.pexels.com/photos/256401/pexels-photo-256401.jpeg?auto=compress&w=800&q=80',
+    features: ['2-year integrated curriculum', 'Complete syllabus coverage', 'Regular assessments', 'Doubt Classes', 'DPP', 'Assignments', 'Parent Teacher Meeting', 'Mock Test', 'Mentorship'],
+    examTarget: 'IIT-JEE',
+    fee: '₹1,80,000/- + 18% GST'
+  },
+  {
+    id: 'IIT-003',
+    title: 'Rank Improvement Batch',
+    description: 'Targeted batch for students aiming to improve their IIT-JEE rank with focused practice.',
+    duration: '1 Year',
+    level: 'IIT-JEE',
+    category: 'IIT-JEE',
+    image: 'https://images.pexels.com/photos/256431/pexels-photo-256431.jpeg?auto=compress&w=800&q=80',
+    features: ['Focused practice', 'Performance analytics', 'Mentor support', 'Doubt Classes', 'DPP', 'Assignments', 'Mock Test'],
+    examTarget: 'IIT-JEE',
+    fee: '₹30,000/- + 18% GST'
+  },
+  {
+    id: 'IIT-004',
+    title: 'Subject Mastery Course',
+    description: 'Short-term course for mastering specific subjects for IIT-JEE.',
+    duration: '3 months',
+    level: 'IIT-JEE',
+    category: 'IIT-JEE',
+    image: 'https://images.pexels.com/photos/5905709/pexels-photo-5905709.jpeg?auto=compress&w=800&q=80',
+    features: ['Subject-specific focus', 'Expert faculty', 'Practice assignments', 'Doubt Classes', 'DPP'],
+    examTarget: 'IIT-JEE',
+    fee: '₹20,000/- + 18% GST'
+  },
+  {
+    id: 'IIT-005',
+    title: 'Quick Revision Course',
+    description: 'Intensive revision program for last-minute IIT-JEE preparation.',
+    duration: '2 Months',
+    level: 'IIT-JEE',
+    category: 'IIT-JEE',
+    image: 'https://images.pexels.com/photos/256442/pexels-photo-256442.jpeg?auto=compress&w=800&q=80',
+    features: ['Revision notes', 'Mock tests', 'Doubt clearing', 'DPP'],
+    examTarget: 'IIT-JEE',
+    fee: '₹7,500/- + 18% GST'
+  },
+  {
+    id: 'IIT-006',
+    title: 'Crash Course',
+    description: 'Short-term crash course for IIT-JEE with rapid syllabus coverage.',
+    duration: '3 Months',
+    level: 'IIT-JEE',
+    category: 'IIT-JEE',
+    image: 'https://images.pexels.com/photos/256455/pexels-photo-256455.jpeg?auto=compress&w=800&q=80',
+    features: ['Rapid syllabus coverage', 'Practice tests', 'Mentor support', 'Doubt Classes', 'Mock Test'],
+    examTarget: 'IIT-JEE',
+    fee: '₹15,000/- + 18% GST'
+  },
+  {
+    id: 'IIT-007',
+    title: 'Weekend Batch',
+    description: 'Weekend classes for IIT-JEE aspirants needing a flexible schedule.',
+    duration: '1 Year',
+    level: 'IIT-JEE',
+    category: 'IIT-JEE',
+    image: 'https://images.pexels.com/photos/256395/pexels-photo-256395.jpeg?auto=compress&w=800&q=80',
+    features: ['Weekend classes', 'Flexible schedule', 'Comprehensive tests', 'Doubt Classes', 'Assignments'],
+    examTarget: 'IIT-JEE',
+    fee: '₹30,000/- + 18% GST'
+  },
+  // NEET Batches
+  {
+    id: 'NEET-001',
+    title: 'Comprehensive Course (Offline)',
+    description: 'Full syllabus coverage for NEET with classroom teaching, doubt sessions, and test series.',
+    duration: '1 Year',
+    level: 'NEET',
+    category: 'NEET',
+    image: 'https://images.pexels.com/photos/3376790/pexels-photo-3376790.jpeg?auto=compress&w=800&q=80',
+    features: ['Offline classroom program', 'Comprehensive study material', 'Regular mock tests', 'Doubt Classes', 'DPP', 'Assignments', 'Parent Teacher Meeting', 'Mock Test', 'Mentorship'],
+    examTarget: 'NEET',
+    fee: '₹1,10,000/- + 18% GST'
+  },
+  {
+    id: 'NEET-002',
+    title: 'Comprehensive Course (Online)',
+    description: 'Live online classes for NEET preparation with digital resources and assessments.',
+    duration: '1 Year',
+    level: 'NEET',
+    category: 'NEET',
+    image: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&w=800&q=80',
+    features: ['Live online classes', 'Digital study material', 'Online test series', 'Doubt Classes', 'DPP', 'Assignments', 'Parent Teacher Meeting', 'Mock Test', 'Mentorship'],
+    examTarget: 'NEET',
+    fee: '₹45,000/- + 18% GST'
+  },
+  {
+    id: 'NEET-008',
+    title: 'Integrated Program (Class 11th and 12th Combined)',
+    description: 'Comprehensive 2-year integrated program covering complete NEET syllabus for Class 11th and 12th.',
+    duration: '2 Years',
+    level: 'NEET',
+    category: 'NEET',
+    image: 'https://images.pexels.com/photos/3376790/pexels-photo-3376790.jpeg?auto=compress&w=800&q=80',
+    features: ['2-year integrated curriculum', 'Complete syllabus coverage', 'Regular assessments', 'Doubt Classes', 'DPP', 'Assignments', 'Parent Teacher Meeting', 'Mock Test', 'Mentorship'],
+    examTarget: 'NEET',
+    fee: '₹1,80,000/- + 18% GST'
+  },
+  {
+    id: 'NEET-003',
+    title: 'Rank Improvement Batch',
+    description: 'Targeted batch for students aiming to improve their NEET rank with focused practice.',
+    duration: '1 Year',
+    level: 'NEET',
+    category: 'NEET',
+    image: 'https://images.pexels.com/photos/256431/pexels-photo-256431.jpeg?auto=compress&w=800&q=80',
+    features: ['Focused practice', 'Performance analytics', 'Mentor support', 'Doubt Classes', 'DPP', 'Assignments', 'Mock Test'],
+    examTarget: 'NEET',
+    fee: '₹30,000/- + 18% GST'
+  },
+  {
+    id: 'NEET-004',
+    title: 'Subject Mastery Course',
+    description: 'Short-term course for mastering specific subjects for NEET.',
+    duration: '3 months',
+    level: 'NEET',
+    category: 'NEET',
+    image: 'https://images.pexels.com/photos/5905709/pexels-photo-5905709.jpeg?auto=compress&w=800&q=80',
+    features: ['Subject-specific focus', 'Expert faculty', 'Practice assignments', 'Doubt Classes', 'DPP'],
+    examTarget: 'NEET',
+    fee: '₹20,000/- + 18% GST'
+  },
+  {
+    id: 'NEET-005',
+    title: 'Quick Revision Course',
+    description: 'Intensive revision program for last-minute NEET preparation.',
+    duration: '2 Months',
+    level: 'NEET',
+    category: 'NEET',
+    image: 'https://images.pexels.com/photos/256442/pexels-photo-256442.jpeg?auto=compress&w=800&q=80',
+    features: ['Revision notes', 'Mock tests', 'Doubt clearing', 'DPP'],
+    examTarget: 'NEET',
+    fee: '₹7,500/- + 18% GST'
+  },
+  {
+    id: 'NEET-006',
+    title: 'Crash Course',
+    description: 'Short-term crash course for NEET with rapid syllabus coverage.',
+    duration: '3 Months',
+    level: 'NEET',
+    category: 'NEET',
+    image: 'https://images.pexels.com/photos/256455/pexels-photo-256455.jpeg?auto=compress&w=800&q=80',
+    features: ['Rapid syllabus coverage', 'Practice tests', 'Mentor support', 'Doubt Classes', 'Mock Test'],
+    examTarget: 'NEET',
+    fee: '₹15,000/- + 18% GST'
+  },
+  {
+    id: 'NEET-007',
+    title: 'Weekend Batch',
+    description: 'Weekend classes for NEET aspirants needing a flexible schedule.',
+    duration: '2 Years',
+    level: 'NEET',
+    category: 'NEET',
+    image: 'https://images.pexels.com/photos/256395/pexels-photo-256395.jpeg?auto=compress&w=800&q=80',
+    features: ['Weekend classes', 'Flexible schedule', 'Comprehensive tests', 'Doubt Classes', 'Assignments'],
+    examTarget: 'NEET',
+    fee: '₹30,000/- + 18% GST'
+  },
+  // Foundation Batches
+  {
+    id: 'F-005',
+    title: 'Pre-Foundation Course (Class 8)',
+    description: 'Foundation building program for Class 8 students to prepare for competitive exams early.',
+    duration: '1 Year',
+    level: 'Foundation',
+    category: 'Foundation',
+    image: 'https://images.pexels.com/photos/5905709/pexels-photo-5905709.jpeg?auto=compress&w=800&q=80',
+    features: ['Early foundation building', 'Conceptual clarity', 'Basic problem solving', 'Doubt Classes', 'Assignments', 'Parent Teacher Meeting'],
+    fee: '₹50,000/- + 18% GST'
+  },
+  {
+    id: 'F-001',
+    title: 'Foundation Course (Class 9)',
+    description: 'Comprehensive foundation program for Class 9 students with focus on concept building.',
+    duration: '1 Year',
+    level: 'Foundation',
+    category: 'Foundation',
+    image: 'https://images.pexels.com/photos/5905709/pexels-photo-5905709.jpeg?auto=compress&w=800&q=80',
+    features: ['Conceptual clarity', 'Foundation building', 'Regular assessments', 'Doubt Classes', 'DPP', 'Assignments', 'Parent Teacher Meeting', 'Mentorship'],
+    fee: '₹60,000/- + 18% GST'
+  },
+  {
+    id: 'F-007',
+    title: 'Foundation Course (Class 10)',
+    description: 'Advanced foundation program for Class 10 students preparing for competitive exams.',
+    duration: '1 Year',
+    level: 'Foundation',
+    category: 'Foundation',
+    image: 'https://images.pexels.com/photos/5905709/pexels-photo-5905709.jpeg?auto=compress&w=800&q=80',
+    features: ['Advanced concepts', 'Competitive exam preparation', 'Board exam focus', 'Doubt Classes', 'DPP', 'Assignments', 'Parent Teacher Meeting', 'Mock Test', 'Mentorship'],
+    fee: '₹70,000/- + 18% GST'
+  },
+  {
+    id: 'F-002',
+    title: 'Mentored Learning Program',
+    description: 'Mentored program for Class IX & X with personalized guidance and support.',
+    duration: '1 Year',
+    level: 'Foundation',
+    category: 'Foundation',
+    image: 'https://images.pexels.com/photos/5905709/pexels-photo-5905709.jpeg?auto=compress&w=800&q=80',
+    features: ['Personalized mentoring', 'Doubt clearing', 'Progress tracking', 'Assignments', 'Parent Teacher Meeting'],
+    fee: '₹30,000/- + 18% GST'
+  },
+  {
+    id: 'F-003',
+    title: 'Recorded Video Courses',
+    description: 'Self-paced recorded video courses for Class IX & X foundation building.',
+    duration: '1 Year',
+    level: 'Foundation',
+    category: 'Foundation',
+    image: 'https://images.pexels.com/photos/5905709/pexels-photo-5905709.jpeg?auto=compress&w=800&q=80',
+    features: ['Recorded lectures', 'Flexible learning', 'Practice assignments', 'DPP'],
+    fee: '₹20,000/- + 18% GST'
+  },
+  {
+    id: 'F-004',
+    title: 'Subject Mastery Course',
+    description: 'Short-term course for mastering specific subjects for Class IX & X.',
+    duration: '2 Months',
+    level: 'Foundation',
+    category: 'Foundation',
+    image: 'https://images.pexels.com/photos/5905709/pexels-photo-5905709.jpeg?auto=compress&w=800&q=80',
+    features: ['Subject-specific focus', 'Expert faculty', 'Practice assignments', 'Doubt Classes'],
+    fee: '₹7,500/- + 18% GST'
+  },
+  {
+    id: 'F-006',
+    title: 'Crash Course',
+    description: 'Short-term crash course for Class IX & X foundation with rapid syllabus coverage.',
+    duration: '3 Months',
+    level: 'Foundation',
+    category: 'Foundation',
+    image: 'https://images.pexels.com/photos/5905709/pexels-photo-5905709.jpeg?auto=compress&w=800&q=80',
+    features: ['Rapid syllabus coverage', 'Practice tests', 'Mentor support', 'Doubt Classes', 'Mock Test'],
+    fee: '₹15,000/- + 18% GST'
+  }
+];
