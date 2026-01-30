@@ -2,6 +2,21 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Trophy, CheckCircle, Clock, Users, BookOpen, CreditCard, Shield, Award, Target, Calendar, FileText } from 'lucide-react';
 import scholarshipHeroBanner from '../assets/images/scholarship-hero-banner.png';
+import API from '../api.js';
+
+
+const loadRazorpay = () => {
+  return new Promise((resolve) => {
+    if ((window as any).Razorpay) return resolve(true);
+
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
+
 
 const Scholarship: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -18,6 +33,7 @@ const Scholarship: React.FC = () => {
   });
 
   const [showPayment, setShowPayment] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
@@ -31,10 +47,92 @@ const Scholarship: React.FC = () => {
     setShowPayment(true);
   };
 
-  const handlePayment = () => {
-    // Payment gateway integration would go here
-    alert('Payment gateway integration - Redirecting to payment...');
+  const handlePayment = async () => {
+    try {
+      setLoading(true);
+
+      const loaded = await loadRazorpay();
+      if (!loaded) {
+        alert("Razorpay SDK failed to load");
+        setLoading(false);
+        return;
+      }
+
+      //  Create Razorpay order and register student
+      const { data: order } = await API.post("/scholarship/create-order", {
+        ...formData,
+        amount: 1
+      });
+
+      if (!order?.order?.id) {
+        alert("Failed to create payment order");
+        setLoading(false);
+        return;
+      }
+
+      //  Razorpay options
+      const options = {
+        key: "rzp_test_S80hQQ3oEIokjk", 
+        amount: order.order.amount,
+        currency: "INR",
+        order_id: order.order.id,
+        name: "Forte Scholarship Test",
+        description: "Scholarship Registration Fee",
+
+        handler: async (response: any) => {
+          try {
+            const { data } = await API.post("/scholarship/verify-payment", {
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature
+            });
+
+            if (data.message === "Payment successful") {
+              alert("🎉 Scholarship registration successful!");
+              setShowPayment(false);
+              setFormData({
+                studentName: "",
+                email: "",
+                phone: "",
+                class: "",
+                course: "",
+                parentName: "",
+                address: "",
+                city: "",
+                state: "",
+                pincode: ""
+              });
+            } else {
+              alert("Payment verification failed");
+            }
+          } catch (err) {
+            console.error(err);
+            alert("Payment verification error");
+          }
+        },
+
+        prefill: {
+          name: formData.studentName,
+          email: formData.email,
+          contact: formData.phone
+        },
+
+        theme: {
+          color: "#2563EB"
+        }
+      };
+
+      const rzp = new (window as any).Razorpay(options);
+      rzp.open();
+
+    } catch (err) {
+      console.error(err);
+      alert("Payment failed");
+    } finally {
+      setLoading(false);
+    }
   };
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-50 via-white to-secondary-50">
@@ -192,6 +290,8 @@ const Scholarship: React.FC = () => {
                     <input
                       type="tel"
                       name="phone"
+                         pattern="[6-9]{1}[0-9]{9}"
+                      maxLength={10}
                       required
                       value={formData.phone}
                       onChange={handleInputChange}
@@ -230,9 +330,9 @@ const Scholarship: React.FC = () => {
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                     >
                       <option value="">Select Course</option>
-                      <option value="iit-jee">IIT-JEE Preparation</option>
-                      <option value="neet">NEET Preparation</option>
-                      <option value="foundation">Foundation Course</option>
+                     <option value="IIT-JEE Preparation">IIT-JEE Preparation</option>
+                      <option value="NEET Preparation">NEET Preparation</option>
+                      <option value="Foundation Course">Foundation Course</option>
                     </select>
                   </div>
                   <div>
@@ -324,11 +424,13 @@ const Scholarship: React.FC = () => {
                 </div>
 
                 <button
-                  type="submit"
+                  type="button"
+                   onClick={handlePayment}
+                  disabled={loading}
                   className="w-full bg-gradient-to-r from-primary-500 to-primary-600 text-white font-bold py-4 px-8 rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 flex items-center justify-center gap-3"
                 >
                   <CreditCard size={24} />
-                  Proceed to Payment (₹499/-)
+                  {loading ? "Processing..." : "Proceed to Payment (₹499/-)"}
                   <ArrowRight size={20} />
                 </button>
               </form>
