@@ -104,11 +104,6 @@ exports.registerScholarshipStudent = async (req, res) => {
 
 
 
-
-
-
-
-
 exports.verifyScholarshipPayment = async (req, res) => {
   const {
     razorpay_order_id,
@@ -143,5 +138,153 @@ exports.verifyScholarshipPayment = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
+  }
+};
+
+exports.getAllScholarshipStudents = async (req, res) => {
+  try {
+    const [students] = await db.query(
+      "SELECT * FROM forte_student ORDER BY created_at DESC"
+    );
+
+    res.status(200).json({
+      count: students.length,
+      students
+    });
+
+  } catch (error) {
+    console.error("❌ Get All Students Error:", error);
+    res.status(500).json({
+      message: "Server error",
+      error: error.message
+    });
+  }
+};
+
+
+exports.getScholarshipStudentById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const [student] = await db.query(
+      "SELECT * FROM forte_student WHERE id = ?",
+      [id]
+    );
+
+    if (student.length === 0) {
+      return res.status(404).json({
+        message: "Student not found"
+      });
+    }
+
+    res.status(200).json(student[0]);
+
+  } catch (error) {
+    console.error("❌ Get Student Error:", error);
+    res.status(500).json({
+      message: "Server error",
+      error: error.message
+    });
+  }
+};
+
+
+exports.updateScholarshipStudent = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const {
+      studentName,
+      phone,
+      class: studentClass,
+      course,
+      parentName,
+      address,
+      city,
+      state,
+      pincode
+    } = req.body;
+
+    const [existing] = await db.query(
+      "SELECT * FROM forte_student WHERE id = ?",
+      [id]
+    );
+
+    if (existing.length === 0) {
+      return res.status(404).json({
+        message: "Student not found"
+      });
+    }
+
+    await db.query(
+      `UPDATE forte_student
+       SET student_name = ?,
+           phone_number = ?,
+           \`class\` = ?,
+           course = ?,
+           parent_name = ?,
+           address = ?,
+           city = ?,
+           state = ?,
+           pincode = ?
+       WHERE id = ?`,
+      [
+        studentName,
+        phone,
+        studentClass,
+        course,
+        parentName,
+        address,
+        city,
+        state,
+        pincode,
+        id
+      ]
+    );
+
+    res.status(200).json({
+      message: "Student updated successfully"
+    });
+
+  } catch (error) {
+    console.error("❌ Update Student Error:", error);
+    res.status(500).json({
+      message: "Server error",
+      error: error.message
+    });
+  }
+};
+
+
+exports.deleteScholarshipStudent = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const [existing] = await db.query(
+      "SELECT * FROM forte_student WHERE id = ?",
+      [id]
+    );
+
+    if (existing.length === 0) {
+      return res.status(404).json({
+        message: "Student not found"
+      });
+    }
+
+    await db.query(
+      "DELETE FROM forte_student WHERE id = ?",
+      [id]
+    );
+
+    res.status(200).json({
+      message: "Student deleted successfully"
+    });
+
+  } catch (error) {
+    console.error("❌ Delete Student Error:", error);
+    res.status(500).json({
+      message: "Server error",
+      error: error.message
+    });
   }
 };

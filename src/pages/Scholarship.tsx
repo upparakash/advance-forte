@@ -125,10 +125,16 @@ const Scholarship: React.FC = () => {
       const rzp = new (window as any).Razorpay(options);
       rzp.open();
 
-    } catch (err) {
-      console.error(err);
-      alert("Payment failed");
-    } finally {
+    } catch (err: any) {
+  console.error("Full Error:", err.response?.data);
+
+  if (err.response?.data?.message) {
+    alert(err.response.data.message);
+  } else {
+    alert("Something went wrong. Please try again.");
+  }
+}
+finally {
       setLoading(false);
     }
   };
