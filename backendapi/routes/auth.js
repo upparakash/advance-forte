@@ -18,14 +18,13 @@ router.post("/signup", async (req, res) => {
   const { name, email, phone, password, role } = req.body;
 
   if (role === "admin") {
-    console.log("⛔ Admin signup blocked");
     return res.status(403).json({ message: "Admin signup not allowed" });
   }
-
+// if (role === "admin" && process.env.ALLOW_ADMIN !== "true") {
+//   return res.status(403).json({ message: "Admin signup not allowed" });
+// }
   try {
-    console.log("🔐 Hashing password...");
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log("✅ Password hashed");
 
     const sql = `
       INSERT INTO advanceforteusers 
@@ -33,32 +32,26 @@ router.post("/signup", async (req, res) => {
       VALUES (?, ?, ?, ?, ?)
     `;
 
-    console.log("📝 Executing SQL query...");
-    console.log("📦 Values:", [name, email, phone, hashedPassword, role]);
+    const [result] = await db.query(sql, [
+      name,
+      email,
+      phone,
+      hashedPassword,
+      role,
+    ]);
 
-    db.query(
-      sql,
-      [name, email, phone, hashedPassword, role],
-      (err, result) => {
-        if (err) {
-          console.error("❌ DB Error:", err);
+    console.log("✅ User inserted:", result.insertId);
+    res.json({ message: "User registered successfully ✅" });
 
-          if (err.code === "ER_DUP_ENTRY") {
-            console.warn("⚠️ Duplicate phone detected");
-            return res
-              .status(409)
-              .json({ message: "Phone number already registered" });
-          }
+  } catch (err) {
+    console.error("❌ Signup error:", err);
 
-          return res.status(500).json({ message: err.message });
-        }
+    if (err.code === "ER_DUP_ENTRY") {
+      return res
+        .status(409)
+        .json({ message: "Phone number already registered" });
+    }
 
-        console.log("✅ User inserted successfully:", result.insertId);
-        res.json({ message: "User registered successfully ✅" });
-      }
-    );
-  } catch (error) {
-    console.error("🔥 Signup exception:", error);
     res.status(500).json({ message: "Signup failed ❌" });
   }
 });
@@ -66,52 +59,48 @@ router.post("/signup", async (req, res) => {
 /**
  * ✅ Login (All roles)
  */
-router.post("/login", (req, res) => {
+router.post("/login", async (req, res) => {
   console.log("📥 Login API called");
   console.log("👉 Request body:", req.body);
 
   const { phone, password, role } = req.body;
 
-  const sql = `
-    SELECT * FROM advanceforteusers 
-    WHERE phone = ? AND role = ?
-  `;
+  try {
+    console.time("DB_QUERY");
 
-  console.log("📝 Running SELECT query...", [phone, role]);
+    const [results] = await db.query(
+      `SELECT * FROM advanceforteusers WHERE phone = ? AND role = ?`,
+      [phone, role]
+    );
 
-  db.query(sql, [phone, role], async (err, results) => {
-    if (err) {
-      console.error("❌ DB Error:", err);
-      return res.status(500).json({ message: err.message });
-    }
-
+    console.timeEnd("DB_QUERY");
     console.log("📊 Query results:", results);
 
     if (results.length === 0) {
-      console.warn("⚠️ User not found");
       return res.status(401).json({ message: "User not found ❌" });
     }
 
     const user = results[0];
 
-    console.log("🔐 Comparing password...");
+    console.time("BCRYPT");
     const isMatch = await bcrypt.compare(password, user.password);
+    console.timeEnd("BCRYPT");
 
     if (!isMatch) {
-      console.warn("⚠️ Password mismatch");
       return res.status(401).json({ message: "Invalid password ❌" });
     }
 
-    console.log("✅ Password matched");
+    if (!process.env.JWT_SECRET) {
+      return res.status(500).json({ message: "JWT secret missing" });
+    }
 
-    console.log("🔑 Generating JWT token...");
     const token = jwt.sign(
       { id: user.id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
 
-    console.log("✅ Token generated");
+    console.log("✅ Login successful");
 
     res.json({
       message: "Login successful ✅",
@@ -122,16 +111,17 @@ router.post("/login", (req, res) => {
         role: user.role,
       },
     });
-  });
+
+  } catch (error) {
+    console.error("🔥 Login error:", error);
+    res.status(500).json({ message: "Login failed ❌" });
+  }
 });
 
 /**
- * ✅ Protected Profile API
+ * ✅ Protected Profile
  */
 router.get("/profile", authMiddleware, (req, res) => {
-  console.log("🔐 Profile API accessed");
-  console.log("👤 Auth user:", req.user);
-
   res.json({
     message: "Protected profile data 🔐",
     user: req.user,

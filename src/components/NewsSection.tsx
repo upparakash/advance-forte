@@ -2,6 +2,7 @@ import React from 'react';
 import { Calendar, ArrowRight, Clock, Tag, ExternalLink } from 'lucide-react';
 import { NewsItem } from '../types';
 import { newsData } from '../data/news';
+import BlogCardList from '../pages/BlogCardList';
 
 const NewsSection: React.FC = () => {
   const formatDate = (dateString: string) => {
@@ -31,6 +32,7 @@ const NewsSection: React.FC = () => {
 
   return (
     <section className="py-16">
+      <BlogCardList />
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           {/* Featured News */}
