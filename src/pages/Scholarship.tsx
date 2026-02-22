@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Trophy, CheckCircle, Clock, Users, BookOpen, CreditCard, Shield, Award, Target, Calendar, FileText } from 'lucide-react';
 import scholarshipHeroBanner from '../assets/images/scholarship-hero-banner.png';
 import API from '../api.js';
-
+import { useNavigate } from "react-router-dom";
 
 const loadRazorpay = () => {
   return new Promise((resolve) => {
     if ((window as any).Razorpay) return resolve(true);
-
+   
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.onload = () => resolve(true);
@@ -34,7 +34,7 @@ const Scholarship: React.FC = () => {
 
   const [showPayment, setShowPayment] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
@@ -133,8 +133,12 @@ const Scholarship: React.FC = () => {
   } else {
     alert("Something went wrong. Please try again.");
   }
+<<<<<<< Updated upstream
 }
 finally {
+=======
+}finally {
+>>>>>>> Stashed changes
       setLoading(false);
     }
   };
@@ -163,6 +167,12 @@ finally {
             <p className="text-lg text-gray-600">
               Complete information about our scholarship examination process
             </p>
+           <button
+  onClick={() => navigate("/receipt")}
+  className="mt-5 w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-xl transition"
+>
+  Download Scholarship Fee Receipt
+</button>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">

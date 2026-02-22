@@ -20,6 +20,7 @@ import DashboardLayout from "./pages/DashboardLayout";
 import DashboardHome from "./pages/DashboardHome";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
+import Receipt from './pages/Receipt';
 
 // Styles
 import './styles/animations.css';
@@ -37,6 +38,7 @@ const PublicLayout = () => {
           <Route path="/faculty" element={<Faculty />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/scholarship" element={<Scholarship />} />
+          <Route path="/receipt" element={<Receipt />} />
           <Route path="/login" element={<Login />} />
           <Route path="/admin/blog-cms" element={<BlogCMS />} />
         </Routes>
