@@ -133,12 +133,9 @@ const Scholarship: React.FC = () => {
   } else {
     alert("Something went wrong. Please try again.");
   }
-<<<<<<< Updated upstream
-}
-finally {
-=======
+
 }finally {
->>>>>>> Stashed changes
+
       setLoading(false);
     }
   };
